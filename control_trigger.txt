@@ -1,0 +1,111 @@
+
+------- tabla tauditor 
+
+create table tauditorCC1 
+(numero SERIAL,
+gid numeric (6) not null,
+nombre varchar not null,
+usuario varchar not null ,
+time varchar not null ,
+constraint tauditorCC1_pkay primary key (numero));
+
+-------- funcion 
+
+create or replace function auditor_CC()
+returns trigger as $$
+begin
+ insert into tauditorCC1(gid,nombre,usuario,time) values (new.id,new.nombre,current_user,current_time);
+ return null;
+ end;
+
+ $$ language plpgsql; 
+ 
+------------------ disparador 
+
+create trigger insertar
+after insert on eventos
+for each row
+execute procedure auditor_CC();
+
+drop trigger insertar on eventos
+
+----- Tabla tauditorCC2 
+
+create table tauditorCC2 
+(numero SERIAL,
+gid numeric (6) not null,
+nombre varchar not null,
+usuario varchar not null ,
+time varchar not null,
+constraint tauditorCC2_pkay primary key (numero));
+
+drop table tauditorCC2 
+
+
+------------ funcion
+
+create or replace function auditor_CC2()
+returns trigger as $$
+begin
+insert into tauditorCC2(gid,nombre,usuario,time) values (old.id,old.nombre,current_user,current_time);
+return null;
+end;
+
+ $$ language plpgsql; 
+ 
+---- Dispardor 2
+
+ create trigger borrar
+ after delete  on eventos
+for each row
+execute procedure auditor_CC2();
+
+drop trigger borrar on eventos
+
+------- Tabla 
+
+create table tauditorCC3
+ (numero serial,
+ gid numeric(6),
+ nombre varchar,
+ descripcion_vieja varchar ,
+ descripcion_nueva varchar,
+ usuario varchar,
+ time varchar,
+ constraint tauditorCC3_pkay primary key (numero));
+
+ drop table tauditorCC3
+
+ --- creamos una funcion del trigger para guardar los cambios que se haga
+
+ create or replace function auditor_CC3()
+ returns trigger as $$
+ begin
+ if new.descripcion <> old.descripcion then
+ insert into tauditorCC3 (nombre,descripcion_vieja,descripcion_nueva,usuario,time) values (eventos.nombre,old.descripcion,new.descripcion,current_user,current_time);
+ end if;
+ return null;
+ end;
+ $$ language plpgsql;
+
+ ---------- disparador 3
+
+ create trigger actualizar 
+ after update on eventos
+ for each row
+ execute procedure auditor_CC3();
+
+drop trigger actualizar on eventos
+
+ ----- verificaicon 
+
+--- borrar 
+
+insert into eventos(lat,lon,nombre,descripcion) values(3.432,-76.234,'mayra sanchez','hueco');
+
+DELETE FROM eventos 
+ WHERE id = 23
+
+ UPDATE eventos
+ SET descripcion = 'hueco de 30 cm de radio'
+ WHERE id = 24;

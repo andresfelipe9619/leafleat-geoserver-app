@@ -1,0 +1,56 @@
+﻿create table universidades
+(gid SERIAL ,
+nombre varchar, 
+direccion varchar,
+telefono integer,
+municipio varchar,
+horario varchar, 
+categoria varchar,
+marca varchar,
+point_x numeric,
+point_y numeric,
+constraint universidades_pkay primary key (gid));
+
+select addgeometrycolumn ('','universidades','geom',4326,'point',2);
+
+update universidades set geom = (st_setsrid(st_makepoint(point_x,point_y),4326));
+
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (0,'UNIVERSIDAD SANTIAGO DE CALI-INSCRPCIONES','CL 5 62 2',0,'CALI','','UNIVERSIDAD','',-76.547059945000001,3.404006687000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (1,'UNIVERSIDAD SANTIAGO DE CALI-RECTORIA','CL 5-62 2',0,'CALI','','UNIVERSIDAD','',-76.547059945000001,3.404006687000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (2,'INSTITUTO DEPARTAMENTAL DE BELLAS ARTES','AV 2-7N 28',6883333,'CALI','','UNIVERSIDAD','',-76.536952553999996,3.453070188000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (3,'PONTIFICIA UNIVERSIDAD JAVERIANA','CL 18 . 118-250',0,'CALI','','UNIVERSIDAD','',-76.530599873000000,3.348651112000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (4,'UNIVERSIDAD DEL VALLE-SEDE SAN FERNANDO','CL 4B  36-00',0,'CALI','','UNIVERSIDAD','',-76.545705849000001,3.432136126000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (5,'CORPORACION UNIVERSITARIA DE CIENCIA Y DESSABRROLLO','CL 25-127 226',0,'CALI','','UNIVERSIDAD','',-76.525089104000003,3.332985167000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (6,'CORPORACION EDUCATIVA CENTRO DE ADMINISTRACION','AV 6-21N 29',6686025,'CALI','','UNIVERSIDAD','',-76.530295284000005,3.463149903000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (7,'CORPORACION ESCUELA SUPERIORR DE ADMINISTRACION Y ESTUDIOS TECLOGICOS','CL 14-49 20',3267000,'CALI','','UNIVERSIDAD','',-76.562076848999993,3.421089086000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (8,'INSTITUCION UNIVERSITARIA ANTONIO JOSE CAMACHO','CL 25-127 200',0,'CALI','','UNIVERSIDAD','',-76.525081204000003,3.333185966000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (9,'UNIVERSIDAD ICESI','CL 18-122 135',0,'CALI','','UNIVERSIDAD','',-76.530818663000005,3.341912470000000);
+insert into universidades(gid,nombre,direccion,telefono,municipio,horario,categoria,marca,point_x,point_y) values (10,'UNIVERSIDAD SANTIAGO DE CALI- RECEPCION E INFORMACION','CL 5 62-00',760035,'CALI','','UNIVERSIDAD','',-76.547059945000001,3.404006687000000);
+
+
+create table  clinicashospites
+(gid SERIAL ,
+nombre varchar, 
+direccion varchar,
+telefono integer,
+municipio varchar,
+horario varchar, 
+categoria varchar,
+marca varchar,
+point_x numeric,
+point_y numeric,
+constraint clinicashospites_pkay primary key (gid));
+
+
+insert into  clinicashospites(gid,nombre,direccion,telefono, municipio, horario,categoria,marca,point_x,point_y) values (0,'CLINICA COMFENALCO- CENTRO MULTIPLE  DE SERVICIOS','CL 5 6-63 TORRE C',8862727,'CALI',' ','CLINICAS HOSPITALES',' ',-76.536700823000004,3.447834027000000)
+insert into  clinicashospites(gid,nombre,direccion,telefono, municipio, horario,categoria,marca,point_x,point_y) values (1,'CLINICA SANTIAGO DE CALI','AV 4-21N 54',0,'CALI','' ,'CLINICAS HOSPITALES','' ,-76.527904700999997,3.461660457000000)
+insert into  clinicashospites(gid,nombre,direccion,telefono, municipio, horario,categoria,marca,point_x,point_y) values (2,'HOSPITAL PILOTO JAMUNDI','AV CIRCUNVALAR  9 13',0,'JAMUNDI','','CLINICAS HOSPITALES','',-76.543367957000001,3.259203397000000)
+
+3,HOSPITAL PSIQUIATRICO UNIVERSITARIO DEL VALLE, CL 5   80-2,0,CALI, ,CLINICAS HOSPITALES, ,-76.544957300999997,3.386154462000000
+4,CLINICA REY DAVID,KR 34  7-00,0,CALI, ,CLINICAS HOSPITALES, ,-76.538614590999998,3.427374144000000
+5,CLINICA VERSALLES- SEDE CALI,AV 5-23 45,0,CALI, ,CLINICAS HOSPITALES, ,-76.527417743000001,3.463548281000000
+6,CLINICA ORGANIZACION MENTE SANA,KR 43A-5B 60 B TEQUENDAMA,0,CALI, ,CLINICAS HOSPITALES, ,-76.545949578999995,3.419510165000000
+7,HOSPITAL EN CASA,CL 5  38-80,0,CALI, ,CLINICAS HOSPITALES, ,-76.545530661000001,3.427700004000000
+8,CLINICA CONFENALCO- CENTRO INTEGRALD E SERVICIOS,KR 4 12-30,0,YUMBO, ,CLINICAS HOSPITALES, ,-76.507558212000006,3.587041389000000
+9, FUNDACION CLINICA VALLE DE LILI  -SEDE PRINCIPAL,KR 98-18 49,0,CALI, ,CLINICAS HOSPITALES, ,-76.526046070999996,3.371318907000000
+10,CLINICA DE OCCIDENTE- SEDE DE CIRUGIA,CL 19-5 N 35,0,CALI, ,CLINICAS HOSPITALES, ,-76.529695899000004,3.460501750000000

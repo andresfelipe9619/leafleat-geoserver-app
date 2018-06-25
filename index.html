@@ -95,7 +95,9 @@
 				<div id="mapid" style="height: 680px; width:90%">
 				</div>
 				<br/>
-				
+				<ul>
+					<li id="myli" ></li>
+				</ul>
 			</div>
 		</div>
 		<div class="row">
@@ -282,21 +284,36 @@
 					})
 			};
 
-		var mymap = L.map('mapid').setView([3.9610648, -76.5363028], 9);
+		var mymap = L.map('mapid').setView([3.4610648, -76.5363028], 12);
+
+		var wmsLayer6 = L.tileLayer.wms('http://localhost:8080/geoserver/wms?', {
+			layers: 'Proyectosig:clinicashospitales',
+			attribution: 'hospitales',
+			format: 'image/png',
+			transparent: true
+		});
 
 		var wmsLayer1 = L.tileLayer.wms('http://localhost:8080/geoserver/wms?', {
-			layers: 'Proyectosig:eventos huecos',
+			layers: 'Proyectosig:eventos_huecos',
 			attribution: 'huecos del municipio de cali',
 			format: 'image/png',
 			transparent: true
 		});
 
-		var wmsLayer2 = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?', {
-			layers: 'idesc:mc_manzanas',
-			attribution: 'Manzanas Cali',
+		var wmsLayer7 = L.tileLayer.wms('http://localhost:8080/geoserver/wms?', {
+			layers: 'Proyectosig:vandalismo',
+			attribution: 'vandalismo',
 			format: 'image/png',
 			transparent: true
 		});
+
+
+		// var wmsLayer2 = L.tileLayer.wms('http://idesc.cali.gov.co:8081/geoserver/wms?', {
+		// 	layers: 'idesc:mc_manzanas',
+		// 	attribution: 'Manzanas Cali',
+		// 	format: 'image/png',
+		// 	transparent: true
+		// });
 
 		var wmsLayer3 = L.tileLayer.wms('http://localhost:8080/geoserver/wms?', {
 			layers: 'Clase10_sig3:barrios',
@@ -314,20 +331,24 @@
 
 		basemaps.Grayscale.addTo(mymap);
 		wmsLayer1.addTo(mymap);
-		wmsLayer2.addTo(mymap);
+		// wmsLayer2.addTo(mymap);
 		wmsLayer3.addTo(mymap);
 		wmsLayer4.addTo(mymap);
+		wmsLayer7.addTo(mymap);
+		wmsLayer6.addTo(mymap);
 
 
 		var groupedOverlays = {
 			"Capas Municipio": {
-				"Manzanas": wmsLayer2
+				// "Manzanas": wmsLayer2
 			}
 			,
 			"Capas propias": {
 				"Huecos": wmsLayer1,
 				"Barrios": wmsLayer3,
-				"Vias departamentales": wmsLayer4
+				"Vias departamentales": wmsLayer4,
+				"Hospitales": wmsLayer6,
+				"vandalismo": wmsLayer7
 			}
 		};
 
@@ -384,6 +405,27 @@
 		})
 
 
+		$("#botonreportados").on("click", function (e) {
+			e.preventDefault()
+			console.log('clicked')
+
+			$.ajax({
+				url: "php/leer.php",
+				type: "get",
+				success: function (response) {
+					console.log(response);
+					// window.location.reload(false);
+					$("#myli").val = response
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(textStatus, errorThrown);
+				}
+
+			});
+			
+		})
+
+
 		$("#enviarform").on("click", function () {
 
 			var lat = $("#input_lat").val();
@@ -427,7 +469,7 @@
 					foto: img
 				};
 
-				console.log(img);
+				console.log(datos);
 
 
 
@@ -437,7 +479,7 @@
 					data: datos,
 					success: function (response) {
 						console.log(response);
-						window.location.reload(true);
+						// window.location.reload(true);
 
 					},
 					error: function (jqXHR, textStatus, errorThrown) {

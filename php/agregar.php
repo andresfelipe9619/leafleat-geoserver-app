@@ -5,10 +5,10 @@ $dbcon = conexion(); // se crea una variable con la función definida anteriorme
 
  $lat=$_POST['lat'];
  $lon=$_POST['lon'];
- $nombre=$_POST['nombre'];
+ $nom=$_POST['nom'];
+ $tip=$_POST['tip'];
+ $desc=$_POST['desc'];
  $fecha=$_POST['fecha'];
- $tipo=$_POST['tipo'];
- $descripcion=$_POST['descripcion'];
  $foto=$_POST['foto'];
  
   if($foto == 'Sin Foto'){
@@ -24,10 +24,8 @@ $dbcon = conexion(); // se crea una variable con la función definida anteriorme
  
  }
  
- 
- $sql ="INSERT INTO eventos (lat, lon, nombre, tipo, fecha,descripcion,foto)
-    VALUES ('".$lat."', '".$lon."', '".$nom."', '".$tip."', '".$fecha."', '".$desc."', '".$nomb_img."');";
+ $sql ="INSERT INTO eventos_huecos (lat,lon, nombre,tipo,descripcion,fecha,foto)
+    VALUES ('".$lat."', '".$lon."', '".$nom."', '".$tip."','".$desc."','".$fecha."', '".$nomb_img."');";
  
  $resultado = pg_query($dbcon, $sql);
- 
 ?>
