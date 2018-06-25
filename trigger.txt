@@ -1,0 +1,15 @@
+select addgeometrycolumn ('','eventos','geom',4326,'point',2);
+
+create or replace function  creargeometrylonlat()
+returns trigger as $$
+begin 
+update eventos set geom = (st_setsrid(st_makepoint(lon,lat),4326));
+return null;
+end;
+$$ language plpgsql;
+
+
+create trigger add_geom
+after insert on eventos 
+for each row 
+execute procedure creargeometrylonlat()
