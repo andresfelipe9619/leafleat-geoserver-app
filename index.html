@@ -86,6 +86,28 @@
 								Mi Ubicacion
 							</button>
 						</li>
+						<li class="list-group-item">
+								Distancia entre dos Huecos
+								<div class="form-group">
+										<label for="dishueco1">Id 1:</label>
+										<input type="text" class="form-control" id="dishueco1" aria-describedby="emailHelp" placeholder="">
+										<label for="dishueco2">Id 2:</label>
+										<input type="text" class="form-control" id="dishueco2" aria-describedby="emailHelp" placeholder="">
+									</div>
+							<button id="botondistancia" type="button" class="btn btn-primary">
+								Hallar distancia 
+							</button>
+						</li>
+						<li class="list-group-item">
+								Huecos cercanos a una 
+								<div class="form-group">
+										<label for="input_lat">Universidad</label>
+										<input type="text" class="form-control" id="input_lat" aria-describedby="emailHelp" placeholder="">
+									</div>
+							<button id="botonubicacion" type="button" class="btn btn-primary">
+								Hallar huecos 
+							</button>
+						</li>
 					</ul>
 				</div>
 				<ul>
@@ -411,6 +433,28 @@
 
 			$.ajax({
 				url: "php/leer.php",
+				type: "get",
+				success: function (response) {
+					console.log(response);
+					// window.location.reload(false);
+					$("#myli").val = response
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(textStatus, errorThrown);
+				}
+
+			});
+			
+		})
+
+		$("#botondistancia").on("click", function (e) {
+			e.preventDefault()
+			console.log('clicked')
+			var hueco1 = $("#dishueco1").val();
+			var hueco2 = $("#dishueco2").val();
+
+			$.ajax({
+				url: "php/leerHuecos.php",
 				type: "get",
 				success: function (response) {
 					console.log(response);
